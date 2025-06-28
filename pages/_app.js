@@ -9,51 +9,26 @@ import {
   midnightTheme,
 } from "@rainbow-me/rainbowkit";
 
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { polygon } from "wagmi/chains";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 // Polygon Mainnet RPC URL
 const Polygon_RPC_URL = process.env.NEXT_PUBLIC_Polygon_RPC_URL;
 const EXPLORER = process.env.NEXT_PUBLIC_EXPLORER;
-const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID; // Should be "137" for mainnet
+const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID;
 const CURRENCY = process.env.NEXT_PUBLIC_CURRENCY;
 const DECIMALS = process.env.NEXT_PUBLIC_NETWORK_DECIMALS;
 const NAME = process.env.NEXT_PUBLIC_NETWORK_NAME;
 const NETWORK = process.env.NEXT_PUBLIC_NETWORK;
 
 export default function App({ Component, pageProps }) {
-  const { chains, provider } = configureChains(
-    [
-      {
-        id: Number(CHAIN_ID), // Should be 137 for Polygon mainnet
-        name: NAME,
-        network: NETWORK,
-        nativeCurrency: {
-          name: NAME,
-          symbol: CURRENCY,
-          decimals: Number(DECIMALS),
-        },
-        rpcUrls: {
-          default: {
-            http: [Polygon_RPC_URL],
-          },
-          public: {
-            http: [Polygon_RPC_URL],
-          },
-        },
-        blockExplorers: {
-          default: {
-            name: "polygonscan",
-            url: EXPLORER,
-          },
-        },
-        testnet: false, // Mainnet, not testnet
-      },
-    ],
+  const { chains, publicClient, webSocketPublicClient } = configureChains(
+    [polygon],
     [
       jsonRpcProvider({
         rpc: (chain) => {
-          if (chain.id === Number(CHAIN_ID)) {
+          if (chain.id === polygon.id) {
             return { http: Polygon_RPC_URL };
           }
           return null;
@@ -65,13 +40,15 @@ export default function App({ Component, pageProps }) {
 
   const { connectors } = getDefaultWallets({
     appName: "StakingDapp",
+    projectId: "YOUR_PROJECT_ID", // You'll need to get this from WalletConnect Cloud
     chains,
   });
 
-  const wagmiClient = createClient({
+  const config = createConfig({
     autoConnect: true,
     connectors,
-    provider,
+    publicClient,
+    webSocketPublicClient,
   });
 
   const myTheme = merge(midnightTheme(), {
@@ -83,7 +60,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <WagmiConfig client={wagmiClient}>
+      <WagmiConfig config={config}>
         <RainbowKitProvider chains={chains} theme={myTheme}>
           <Component {...pageProps} />
           <Toaster />
