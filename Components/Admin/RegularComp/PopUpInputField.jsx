@@ -1,15 +1,12 @@
 import React from "react";
 
-const PopUpInputField = ({ title, placeholder, handleChange, icon }) => {
+const PopUpInputField = ({ title, placeholder, handleChange }) => {
   return (
-    <div className="form-group">
-      <label className="form-label flex items-center space-x-2">
-        {icon && <span>{icon}</span>}
-        <span>{title}</span>
-      </label>
+    <div className="form__group">
+      <label className="form__label">{title}</label>
       <input
         type="text"
-        className="form-control"
+        className="form__input"
         placeholder={placeholder}
         onChange={handleChange}
       />

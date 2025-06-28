@@ -41,8 +41,8 @@ const Pool = ({ poolDetails, createPool, setLoader, setModifyPoolID }) => {
               id="section__profile-tabs3"
               role="tablist"
             >
-              <ButtonCmp name="Add Pool" tab="f6" styleClass="active" />
-              <ButtonCmp name="Pool List" tab="f7" />
+              <ButtonCmp name={"Add Pool"} tab={"f6"} styleClass={"active"} />
+              <ButtonCmp name={"Pool List"} tab={"f7"} />
             </ul>
 
             <div className="tab-content">
@@ -52,51 +52,51 @@ const Pool = ({ poolDetails, createPool, setLoader, setModifyPoolID }) => {
                 role="tabpanel"
               >
                 <div className="row">
-                  <Title title="Provide pool details to create, new pool" />
+                  <Title title={"Provide pool details to create, new pool"} />
 
                   <InputField
-                    size="12"
-                    type="text"
-                    title="Stake Token Address"
-                    name="depositToken1"
-                    placeholder="address"
+                    size={"12"}
+                    type={"text"}
+                    title={"Stake Token Address"}
+                    name={"depositToken1"}
+                    placeholder={"address"}
                     handleChange={(e) =>
                       setPool({ ...pool, _depositToken: e.target.value })
                     }
                   />
                   <InputField
-                    size="12"
-                    type="text"
-                    title="Reward Token Address"
-                    name="rewardToken1"
-                    placeholder="address"
+                    size={"12"}
+                    type={"text"}
+                    title={"Reward Token Address"}
+                    name={"rewardToken1"}
+                    placeholder={"address"}
                     handleChange={(e) =>
                       setPool({ ...pool, _rewardToken: e.target.value })
                     }
                   />
                   <InputField
-                    size="6"
-                    type="text"
-                    title="APY %"
-                    name="AYP1"
-                    placeholder="AYP"
+                    size={"6"}
+                    type={"text"}
+                    title={"APY %"}
+                    name={"AYP1"}
+                    placeholder={"AYP"}
                     handleChange={(e) =>
                       setPool({ ...pool, _apy: e.target.value })
                     }
                   />
                   <InputField
-                    size="6"
-                    type="text"
-                    title="Lock days"
-                    name="days1"
-                    placeholder="days"
+                    size={"6"}
+                    type={"text"}
+                    title={"Lock days"}
+                    name={"days1"}
+                    placeholder={"days"}
                     handleChange={(e) =>
                       setPool({ ...pool, _lockDays: e.target.value })
                     }
                   />
 
                   <ClickButton
-                    name="Create Pool"
+                    name={"Create Pool"}
                     handleClick={() => CALLING_FUNCTION(pool)}
                   />
                 </div>
@@ -104,7 +104,7 @@ const Pool = ({ poolDetails, createPool, setLoader, setModifyPoolID }) => {
 
               <div className="tab-pane fade" id="tab-f7" role="tabpanel">
                 <div className="row">
-                  <Title title="All Pool" />
+                  <Title title={"All Pool"} />
                   <div className="col-12">
                     <div
                       className="scrollable-div"
