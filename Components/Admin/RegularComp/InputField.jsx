@@ -9,23 +9,34 @@ const InputField = ({
   handleChange,
   value,
   disabled,
+  icon
 }) => {
   return (
-    <div className={`col-12 col-xl-${size}`}>
-      <div className="form__group">
-        <label htmlFor={name} className="form__label">
-          {title}
+    <div className={`col-span-${size === "12" ? "full" : size === "6" ? "1" : "1"}`}>
+      <div className="form-group">
+        <label htmlFor={name} className="form-label flex items-center space-x-2">
+          {icon && <span>{icon}</span>}
+          <span>{title}</span>
         </label>
-        <input
-          id={name}
-          type={type}
-          name={name}
-          className="form__input"
-          placeholder={placeholder}
-          onChange={handleChange}
-          value={value}
-          disabled={disabled}
-        />
+        
+        <div className="relative">
+          <input
+            id={name}
+            type={type}
+            name={name}
+            className={`form-control ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+            placeholder={placeholder}
+            onChange={handleChange}
+            value={value}
+            disabled={disabled}
+          />
+          
+          {icon && (
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary">
+              <span className="text-sm">{icon}</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
