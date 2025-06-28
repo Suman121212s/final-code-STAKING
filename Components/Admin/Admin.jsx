@@ -20,51 +20,47 @@ const Admin = ({
   setModifyPoolID,
 }) => {
   return (
-    <section className="py-20 relative">
+    <div className="section">
       <div className="container">
-        <div className="grid lg:grid-cols-4 gap-8">
+        <div className="row">
           <AdminNav />
 
-          <div className="lg:col-span-3">
-            <div className="tab-content space-y-8">
+          <div className="col-12 col-lg-9">
+            <div className="tab-content">
               <div
                 className="tab-pane fade show active"
                 id="tab-1"
                 role="tabpanel"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+                <div className="row">
                   {poolDetails?.poolInfoArray.map((pool, index) => (
                     <AdminCard
                       key={index}
-                      name={`Current APY: ${pool.apy}%`}
-                      value={`${pool.depositedAmount} ${pool.depositToken.symbol}`}
-                      icon="📈"
-                      gradient="from-primary-500 to-secondary-500"
+                      name={`Current APY: ${pool.apy} %`}
+                      value={`${pool.depositedAmount} 
+                  ${pool.depositToken.symbol}`}
                     />
                   ))}
                   <AdminCard
-                    name="Total Stake"
-                    value={`${poolDetails?.totalDepositAmount} ${poolDetails?.depositToken.symbol}`}
-                    icon="💰"
-                    gradient="from-accent-500 to-primary-500"
+                    name={`Total Stake`}
+                    value={`${poolDetails?.totalDepositAmount}
+                ${poolDetails?.depositToken.symbol}`}
                   />
                   <AdminCard
-                    name="Your Balance"
-                    value={`${poolDetails?.depositToken.balance.slice(0, 8)} ${poolDetails?.depositToken.symbol}`}
-                    icon="👛"
-                    gradient="from-secondary-500 to-accent-500"
+                    name={`Your Balance`}
+                    value={`${poolDetails?.depositToken.balance.slice(0, 8)}
+                ${poolDetails?.depositToken.symbol}`}
                   />
                   <AdminCard
-                    name="Available Supply"
+                    name={`Available Supply`}
                     value={`${poolDetails?.contractTokenBalance
                       .toString()
-                      .slice(0, 8)} ${poolDetails?.depositToken.symbol}`}
-                    icon="🏦"
-                    gradient="from-warning to-error"
+                      .slice(0, 8)} 
+                ${poolDetails?.depositToken.symbol}`}
                   />
-                </div>
 
-                <Token token={poolDetails?.depositToken} />
+                  <Token token={poolDetails?.depositToken} />
+                </div>
               </div>
 
               <Investing poolDetails={poolDetails} />
@@ -88,13 +84,12 @@ const Admin = ({
                 setLoader={setLoader}
                 setModifyPoolID={setModifyPoolID}
               />
-              
               <ICOToken setLoader={setLoader} />
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

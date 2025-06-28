@@ -12,7 +12,7 @@ const InputField = ({
   icon
 }) => {
   return (
-    <div className={`col-span-${size === "12" ? "full" : size === "6" ? "1" : "1"}`}>
+    <div className={`col-12 col-xl-${size}`}>
       <div className="form-group">
         <label htmlFor={name} className="form-label flex items-center space-x-2">
           {icon && <span>{icon}</span>}
@@ -30,12 +30,6 @@ const InputField = ({
             value={value}
             disabled={disabled}
           />
-          
-          {icon && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary">
-              <span className="text-sm">{icon}</span>
-            </div>
-          )}
         </div>
       </div>
     </div>
