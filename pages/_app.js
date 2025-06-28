@@ -54,7 +54,7 @@ export default function App({ Component, pageProps }) {
       jsonRpcProvider({
         rpc: (chain) => {
           if (chain.id === Number(CHAIN_ID)) {
-            return { http: '${Polygon_RPC_URL}' };
+            return { http: Polygon_RPC_URL };
           }
           return null;
         },
