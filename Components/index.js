@@ -13,6 +13,8 @@ import Notification from "./Notification";
 import ICOSale from "./ICOSale";
 import Contact from "./Contact";
 import Ask from "./Ask";
+import ThemeProvider from "./ThemeProvider";
+import ThemeToggle from "./ThemeToggle";
 
 export {
   Header,
@@ -30,4 +32,6 @@ export {
   Notification,
   Ask,
   Contact,
+  ThemeProvider,
+  ThemeToggle,
 };

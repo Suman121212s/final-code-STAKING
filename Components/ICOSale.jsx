@@ -11,7 +11,8 @@ const ADMIN_ADDRESS = process.env.NEXT_PUBLIC_ADMIN_ADDRESS;
 const ICOSale = ({ setLoader }) => {
   const { address } = useAccount();
   const [tokenDetails, setTokenDetails] = useState();
-  const [quentity, setQuentity] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+
   useEffect(() => {
     if (address) {
       const loadToken = async () => {
@@ -23,17 +24,18 @@ const ICOSale = ({ setLoader }) => {
     }
   }, [address]);
 
-  const CALLING_FUNCTION_BUY_TOKEN = async (quentity) => {
+  const CALLING_FUNCTION_BUY_TOKEN = async (quantity) => {
     setLoader(true);
-    console.log(quentity);
-    const receipt = await BUY_TOKEN(quentity);
+    console.log(quantity);
+    const receipt = await BUY_TOKEN(quantity);
     if (receipt) {
       console.log(receipt);
       setLoader(false);
       window.location.reload();
     }
-    setLoader(true);
+    setLoader(false);
   };
+
   return (
     <div
       className="modal modal--auto fade"
@@ -59,7 +61,7 @@ const ICOSale = ({ setLoader }) => {
               {tokenDetails?.token.symbol} ICO Token
             </h4>
             <p className="modal__text">
-              Participate in the <span>MECOIN ICO </span> Sale
+              Participate in the <span className="gradient-text">MECOIN ICO </span> Sale
             </p>
 
             <div className="modal__form">
@@ -75,7 +77,7 @@ const ICOSale = ({ setLoader }) => {
                   placeholder={`${
                     tokenDetails?.token.symbol
                   }: ${tokenDetails?.token.balance.toString().slice(0, 12)}`}
-                  onChange={(e) => setQuentity(e.target.value)}
+                  onChange={(e) => setQuantity(e.target.value)}
                 />
               </div>
               <div className="form__group">
@@ -85,7 +87,7 @@ const ICOSale = ({ setLoader }) => {
                   type="text"
                   className="form__input"
                   placeholder={`${
-                    Number(tokenDetails?.tokenPrice) * quentity
+                    Number(tokenDetails?.tokenPrice) * quantity
                   } ${tokenDetails?.token.symbol}`}
                   disabled
                 />
@@ -93,7 +95,7 @@ const ICOSale = ({ setLoader }) => {
               <button
                 className="form__btn"
                 type="button"
-                onClick={() => CALLING_FUNCTION_BUY_TOKEN(quentity)}
+                onClick={() => CALLING_FUNCTION_BUY_TOKEN(quantity)}
               >
                 Buy {tokenDetails?.token.symbol}
               </button>

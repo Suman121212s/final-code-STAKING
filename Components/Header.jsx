@@ -9,11 +9,13 @@ import {
   MdAdminPanelSettings,
   MdGeneratingTokens,
 } from "../Components/ReactICON/index";
+import ThemeToggle from "./ThemeToggle";
 
 const ADMIN_ADDRESS = process.env.NEXT_PUBLIC_ADMIN_ADDRESS;
 
 const Header = ({ page }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { address } = useAccount();
 
   const navigation = [
@@ -46,23 +48,21 @@ const Header = ({ page }) => {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass border-b border-white/10' : 'bg-transparent'
-      }`}>
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
+      <header className={`navbar ${isScrolled ? 'shadow-lg' : ''}`}>
+        <div className="container">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-4">
               <a href="/" className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-primary-500 to-secondary-600 flex items-center justify-center shadow-lg">
                   <span className="text-white font-bold text-lg">M</span>
                 </div>
-                <span className="text-2xl font-bold gradient-text">MECOIN</span>
+                <span className="navbar-brand">MECOIN</span>
               </a>
             </div>
 
-            {/* Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-1">
               {navigation.map((item, index) => (
                 <a
                   key={index}
@@ -73,24 +73,26 @@ const Header = ({ page }) => {
                       ? "/"
                       : `${item.link}`
                   }
-                  className="relative text-gray-300 hover:text-white transition-colors duration-300 font-medium group"
+                  className="nav-link"
                 >
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
                 </a>
               ))}
             </nav>
 
             {/* Actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
+              {/* Theme Toggle */}
+              <ThemeToggle />
+
               {/* ICO Button */}
               <button
                 data-bs-target="#modal-deposit1"
                 type="button"
                 data-bs-toggle="modal"
-                className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-lg font-medium hover:shadow-lg hover:shadow-pink-500/25 transition-all duration-300"
+                className="hidden sm:flex btn btn-secondary btn-sm"
               >
-                <MdGeneratingTokens className="w-5 h-5" />
+                <MdGeneratingTokens className="w-4 h-4" />
                 <span>MECOIN ICO</span>
               </button>
 
@@ -131,9 +133,9 @@ const Header = ({ page }) => {
                               <button
                                 onClick={openConnectModal}
                                 type="button"
-                                className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
+                                className="btn btn-primary"
                               >
-                                <FaWallet className="w-5 h-5" />
+                                <FaWallet className="w-4 h-4" />
                                 <span>Connect Wallet</span>
                               </button>
                             );
@@ -144,7 +146,7 @@ const Header = ({ page }) => {
                               <button
                                 onClick={openChainModal}
                                 type="button"
-                                className="flex items-center space-x-2 px-6 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-all duration-300"
+                                className="btn bg-error text-white hover:bg-red-700"
                               >
                                 Wrong network
                               </button>
@@ -156,15 +158,15 @@ const Header = ({ page }) => {
                               <button
                                 onClick={openChainModal}
                                 type="button"
-                                className="flex items-center space-x-2 px-3 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-all duration-300"
+                                className="btn btn-ghost btn-sm"
                               >
                                 {chain.hasIcon && (
-                                  <div className="w-5 h-5">
+                                  <div className="w-4 h-4">
                                     {chain.iconUrl && (
                                       <img
                                         alt={chain.name ?? 'Chain icon'}
                                         src={chain.iconUrl}
-                                        className="w-5 h-5"
+                                        className="w-4 h-4 rounded"
                                       />
                                     )}
                                   </div>
@@ -175,7 +177,7 @@ const Header = ({ page }) => {
                               <button
                                 onClick={openAccountModal}
                                 type="button"
-                                className="flex items-center space-x-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-all duration-300"
+                                className="btn btn-secondary btn-sm font-mono"
                               >
                                 {account.displayName}
                                 {account.displayBalance
@@ -195,26 +197,60 @@ const Header = ({ page }) => {
               {address?.toLowerCase() === ADMIN_ADDRESS?.toLowerCase() && (
                 <a
                   href="/admin"
-                  className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg font-medium hover:shadow-lg hover:shadow-emerald-500/25 transition-all duration-300"
+                  className="btn btn-outline btn-sm"
                 >
-                  <MdAdminPanelSettings className="w-5 h-5" />
+                  <MdAdminPanelSettings className="w-4 h-4" />
                   <span className="hidden sm:inline">Admin</span>
                 </a>
               )}
 
               {/* Mobile Menu Button */}
-              <button className="md:hidden p-2 text-gray-300 hover:text-white">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button 
+                className="md:hidden btn btn-ghost btn-sm"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
             </div>
           </div>
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-border-primary">
+              <nav className="flex flex-col space-y-2 mt-4">
+                {navigation.map((item, index) => (
+                  <a
+                    key={index}
+                    href={
+                      page === "activity"
+                        ? "/"
+                        : page === "admin"
+                        ? "/"
+                        : `${item.link}`
+                    }
+                    className="nav-link"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+                <button
+                  data-bs-target="#modal-deposit1"
+                  type="button"
+                  data-bs-toggle="modal"
+                  className="btn btn-secondary btn-sm mt-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <MdGeneratingTokens className="w-4 h-4" />
+                  <span>MECOIN ICO</span>
+                </button>
+              </nav>
+            </div>
+          )}
         </div>
       </header>
-
-      {/* Spacer for fixed header */}
-      <div className="h-20"></div>
     </>
   );
 };

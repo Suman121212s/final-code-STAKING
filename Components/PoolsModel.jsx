@@ -25,6 +25,7 @@ const PoolsModel = ({
     }
     setLoader(false);
   };
+
   return (
     <div
       className="modal modal--auto fade"
@@ -48,12 +49,12 @@ const PoolsModel = ({
             </button>
             <h4 className="modal__title">Invest</h4>
             <p className="modal__text">
-              Welcome to MECOIN, stake your{" "}
-              {selectedPool?.depositToken.name} token to eran reward .
+              Welcome to <span className="gradient-text">MECOIN</span>, stake your{" "}
+              {selectedPool?.depositToken.name} token to earn rewards.
             </p>
             <div className="modal__form">
               <PopUpInputField
-                title={` Stake ${selectedPool?.depositToken.name} token`}
+                title={`Stake ${selectedPool?.depositToken.name} token`}
                 placeholder={"Amount"}
                 handleChange={(e) => setAmount(e.target.value)}
               />

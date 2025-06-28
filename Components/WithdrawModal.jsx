@@ -33,6 +33,7 @@ const WithdrawModal = ({
     }
     setLoader(false);
   };
+
   return (
     <div
       className="modal modal--auto fade"
@@ -56,8 +57,7 @@ const WithdrawModal = ({
             </button>
             <h4 className="modal__title">Withdraw Token</h4>
             <p className="modal__text">
-              You can spend money from your account to renew connected packages
-              or pay in other available ways.
+              You can withdraw your staked tokens or claim your accumulated rewards.
             </p>
             <div className="modal__form">
               <PopUpInputField

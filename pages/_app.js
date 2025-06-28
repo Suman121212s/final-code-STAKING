@@ -13,14 +13,11 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { polygon } from "wagmi/chains";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
+// Theme Provider
+import { ThemeProvider } from "../Components";
+
 // Polygon Mainnet RPC URL
 const Polygon_RPC_URL = process.env.NEXT_PUBLIC_Polygon_RPC_URL;
-const EXPLORER = process.env.NEXT_PUBLIC_EXPLORER;
-const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID;
-const CURRENCY = process.env.NEXT_PUBLIC_CURRENCY;
-const DECIMALS = process.env.NEXT_PUBLIC_NETWORK_DECIMALS;
-const NAME = process.env.NEXT_PUBLIC_NETWORK_NAME;
-const NETWORK = process.env.NEXT_PUBLIC_NETWORK;
 
 export default function App({ Component, pageProps }) {
   const { chains, publicClient, webSocketPublicClient } = configureChains(
@@ -40,7 +37,7 @@ export default function App({ Component, pageProps }) {
 
   const { connectors } = getDefaultWallets({
     appName: "StakingDapp",
-    projectId: "YOUR_PROJECT_ID", // You'll need to get this from WalletConnect Cloud
+    projectId: "YOUR_PROJECT_ID",
     chains,
   });
 
@@ -53,17 +50,49 @@ export default function App({ Component, pageProps }) {
 
   const myTheme = merge(midnightTheme(), {
     colors: {
-      accentColor: "#562C7B",
+      accentColor: "#3b82f6",
       accentColorForeground: "#fff",
+      modalBackground: "var(--bg-secondary)",
+      modalBorder: "var(--border-primary)",
+    },
+    radii: {
+      actionButton: "12px",
+      connectButton: "12px",
+      menuButton: "12px",
+      modal: "16px",
     },
   });
 
   return (
-    <>
+    <ThemeProvider>
       <WagmiConfig config={config}>
         <RainbowKitProvider chains={chains} theme={myTheme}>
           <Component {...pageProps} />
-          <Toaster />
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: 'var(--bg-card)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-primary)',
+                borderRadius: '12px',
+                backdropFilter: 'blur(20px)',
+              },
+              success: {
+                iconTheme: {
+                  primary: 'var(--success)',
+                  secondary: 'white',
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: 'var(--error)',
+                  secondary: 'white',
+                },
+              },
+            }}
+          />
         </RainbowKitProvider>
       </WagmiConfig>
 
@@ -73,6 +102,6 @@ export default function App({ Component, pageProps }) {
       <script src="js/three.min.js"></script>
       <script src="js/vanta.fog.min.js"></script>
       <script src="js/main.js"></script>
-    </>
+    </ThemeProvider>
   );
 }

@@ -10,9 +10,11 @@ import { IoMdClose } from "../Components/ReactICON";
 const Contact = ({ setContactUs }) => {
   const notifySuccess = (msg) => toast.success(msg, { duration: 2000 });
   const [state, handleSubmit] = useForm(FORMSPREE_API);
+  
   if (state.succeeded) {
     return notifySuccess("Message sent successfully");
   }
+
   return (
     <div
       className="modal modal--auto fade show"
@@ -56,13 +58,14 @@ const Contact = ({ setContactUs }) => {
                   id="email"
                   type="email"
                   name="email"
-                />{" "}
+                />
                 <ValidationError
                   prefix="Email"
                   field="email"
                   errors={state.errors}
                 />
               </div>
+              
               <div className="form__group">
                 <textarea
                   id="message"
