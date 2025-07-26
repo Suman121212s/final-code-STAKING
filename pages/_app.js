@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import toast, { Toaster } from "react-hot-toast";
 import merge from "lodash/merge";
 import "@rainbow-me/rainbowkit/styles.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import {
   getDefaultWallets,
@@ -20,6 +21,16 @@ import { ThemeProvider } from "../Components";
 const Polygon_RPC_URL = process.env.NEXT_PUBLIC_Polygon_RPC_URL;
 
 export default function App({ Component, pageProps }) {
+  const [queryClient] = React.useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 3,
+        retryDelay: 1000,
+        staleTime: 5 * 60 * 1000, // 5 minutes
+      },
+    },
+  }));
+
   const { chains, publicClient, webSocketPublicClient } = configureChains(
     [polygon],
     [
@@ -65,36 +76,38 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ThemeProvider>
-      <WagmiConfig config={config}>
-        <RainbowKitProvider chains={chains} theme={myTheme}>
-          <Component {...pageProps} />
-          <Toaster 
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: 'var(--bg-card)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-primary)',
-                borderRadius: '12px',
-                backdropFilter: 'blur(20px)',
-              },
-              success: {
-                iconTheme: {
-                  primary: 'var(--success)',
-                  secondary: 'white',
+      <QueryClientProvider client={queryClient}>
+        <WagmiConfig config={config}>
+          <RainbowKitProvider chains={chains} theme={myTheme}>
+            <Component {...pageProps} />
+            <Toaster 
+              position="top-right"
+              toastOptions={{
+                duration: 4000,
+                style: {
+                  background: 'var(--bg-card)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-primary)',
+                  borderRadius: '12px',
+                  backdropFilter: 'blur(20px)',
                 },
-              },
-              error: {
-                iconTheme: {
-                  primary: 'var(--error)',
-                  secondary: 'white',
+                success: {
+                  iconTheme: {
+                    primary: 'var(--success)',
+                    secondary: 'white',
+                  },
                 },
-              },
-            }}
-          />
-        </RainbowKitProvider>
-      </WagmiConfig>
+                error: {
+                  iconTheme: {
+                    primary: 'var(--error)',
+                    secondary: 'white',
+                  },
+                },
+              }}
+            />
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </QueryClientProvider>
 
       <script src="js/bootstrap.bundle.min.js"></script>
       <script src="js/smooth-scrollbar.js"></script>
