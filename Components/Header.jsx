@@ -48,16 +48,16 @@ const Header = ({ page }) => {
 
   return (
     <>
-      <header className={`navbar ${isScrolled ? 'shadow-lg' : ''}`}>
+      <header className={`navbar ${isScrolled ? 'shadow-xl' : ''}`}>
         <div className="container">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-4">
               <a href="/" className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-primary-500 to-secondary-600 flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-lg">M</span>
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-xl">
+                  <span className="text-white font-black text-xl">M</span>
                 </div>
-                <span className="navbar-brand">MECOIN</span>
+                <span className="navbar-brand text-3xl">MECOIN</span>
               </a>
             </div>
 
@@ -73,7 +73,7 @@ const Header = ({ page }) => {
                       ? "/"
                       : `${item.link}`
                   }
-                  className="nav-link"
+                  className="nav-link relative px-4 py-2 rounded-xl font-medium transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500/10 hover:to-purple-500/10"
                 >
                   {item.name}
                 </a>
@@ -90,7 +90,7 @@ const Header = ({ page }) => {
                 data-bs-target="#modal-deposit1"
                 type="button"
                 data-bs-toggle="modal"
-                className="hidden sm:flex btn btn-secondary btn-sm"
+                className="hidden sm:flex btn btn-secondary btn-sm bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-purple-500/30 hover:from-purple-500/30 hover:to-pink-500/30"
               >
                 <MdGeneratingTokens className="w-4 h-4" />
                 <span>MECOIN ICO</span>
@@ -133,7 +133,7 @@ const Header = ({ page }) => {
                               <button
                                 onClick={openConnectModal}
                                 type="button"
-                                className="btn btn-primary"
+                                className="btn btn-primary bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl"
                               >
                                 <FaWallet className="w-4 h-4" />
                                 <span>Connect Wallet</span>
@@ -146,7 +146,7 @@ const Header = ({ page }) => {
                               <button
                                 onClick={openChainModal}
                                 type="button"
-                                className="btn bg-error text-white hover:bg-red-700"
+                                className="btn bg-red-500 text-white hover:bg-red-600 shadow-lg"
                               >
                                 Wrong network
                               </button>
@@ -158,7 +158,7 @@ const Header = ({ page }) => {
                               <button
                                 onClick={openChainModal}
                                 type="button"
-                                className="btn btn-ghost btn-sm"
+                                className="btn btn-ghost btn-sm bg-gray-500/10 hover:bg-gray-500/20 border border-gray-500/20"
                               >
                                 {chain.hasIcon && (
                                   <div className="w-4 h-4">
@@ -177,7 +177,7 @@ const Header = ({ page }) => {
                               <button
                                 onClick={openAccountModal}
                                 type="button"
-                                className="btn btn-secondary btn-sm font-mono"
+                                className="btn btn-secondary btn-sm font-mono bg-gradient-to-r from-green-500/20 to-blue-500/20 border-green-500/30"
                               >
                                 {account.displayName}
                                 {account.displayBalance
@@ -197,7 +197,7 @@ const Header = ({ page }) => {
               {address?.toLowerCase() === ADMIN_ADDRESS?.toLowerCase() && (
                 <a
                   href="/admin"
-                  className="btn btn-outline btn-sm"
+                  className="btn btn-outline btn-sm bg-gradient-to-r from-orange-500/20 to-red-500/20 border-orange-500/30 hover:from-orange-500/30 hover:to-red-500/30"
                 >
                   <MdAdminPanelSettings className="w-4 h-4" />
                   <span className="hidden sm:inline">Admin</span>
@@ -218,7 +218,7 @@ const Header = ({ page }) => {
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-border-primary">
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-500/20">
               <nav className="flex flex-col space-y-2 mt-4">
                 {navigation.map((item, index) => (
                   <a
@@ -230,7 +230,7 @@ const Header = ({ page }) => {
                         ? "/"
                         : `${item.link}`
                     }
-                    className="nav-link"
+                    className="nav-link px-4 py-3 rounded-xl hover:bg-gradient-to-r hover:from-blue-500/10 hover:to-purple-500/10"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.name}
@@ -240,7 +240,7 @@ const Header = ({ page }) => {
                   data-bs-target="#modal-deposit1"
                   type="button"
                   data-bs-toggle="modal"
-                  className="btn btn-secondary btn-sm mt-2"
+                  className="btn btn-secondary btn-sm mt-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <MdGeneratingTokens className="w-4 h-4" />

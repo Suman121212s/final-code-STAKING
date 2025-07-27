@@ -8,53 +8,74 @@ const Notification = ({ poolDetails, page }) => {
   const getTransactionTypeColor = (type) => {
     switch (type?.toLowerCase()) {
       case 'deposit':
-        return 'text-success bg-success/10 border-success/20';
+        return 'text-green-400 bg-green-500/20 border-green-500/30';
       case 'withdraw':
-        return 'text-error bg-error/10 border-error/20';
+        return 'text-red-400 bg-red-500/20 border-red-500/30';
       case 'claim':
-        return 'text-info bg-info/10 border-info/20';
+        return 'text-blue-400 bg-blue-500/20 border-blue-500/30';
       default:
-        return 'text-muted bg-muted/10 border-muted/20';
+        return 'text-gray-400 bg-gray-500/20 border-gray-500/30';
+    }
+  };
+
+  const getTransactionIcon = (type) => {
+    switch (type?.toLowerCase()) {
+      case 'deposit':
+        return '📈';
+      case 'withdraw':
+        return '📉';
+      case 'claim':
+        return '🎁';
+      default:
+        return '📊';
     }
   };
 
   return (
-    <section className="py-20 relative">
-      <div className="container">
-        {/* Section Header */}
+    <section className="py-24 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container relative z-10">
+        {/* Enhanced Section Header */}
         {page !== "activity" && (
-          <div className="text-center mb-16 space-y-4 animate-fade-in-up">
-            <div className="inline-flex items-center space-x-2 px-4 py-2 glass rounded-full">
-              <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-primary-300">LIVE TRANSACTIONS</span>
+          <div className="text-center mb-20 space-y-6 animate-fade-in-up">
+            <div className="inline-flex items-center space-x-3 px-6 py-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 rounded-full backdrop-blur-sm">
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+              <span className="text-sm font-bold text-blue-300">LIVE TRANSACTIONS</span>
             </div>
-            <h2 className="text-4xl lg:text-5xl font-bold">
-              <span className="gradient-text">Real-time</span> Activity
+            <h2 className="text-5xl lg:text-6xl font-black">
+              <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">Real-time</span>
+              <br />
+              <span className="text-white">Activity</span>
             </h2>
-            <p className="text-xl text-secondary max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
               MECOIN is now delivering live, real-time data straight from the blockchain. 
               Stay ahead of the game with instant insights into transactions, token flows, and more.
             </p>
           </div>
         )}
 
-        {/* Transactions Table */}
+        {/* Enhanced Transactions Table */}
         <div className="relative animate-fade-in-up">
-          {/* Glow Effect */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-2xl blur opacity-50"></div>
+          {/* Enhanced Glow Effect */}
+          <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-xl opacity-50"></div>
           
           {/* Main Container */}
-          <div className="relative card overflow-hidden">
+          <div className="relative bg-gray-900/90 backdrop-blur-xl border border-gray-700/50 rounded-3xl overflow-hidden">
             <div className="overflow-x-auto scrollable-div">
               <table className="table w-full">
                 <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Token</th>
-                    <th>User</th>
-                    <th>Pool ID</th>
-                    <th>Amount</th>
-                    <th>Date</th>
+                  <tr className="bg-gray-800/50">
+                    <th className="text-left py-6 px-6 text-gray-300 font-bold uppercase tracking-wider">Type</th>
+                    <th className="text-left py-6 px-6 text-gray-300 font-bold uppercase tracking-wider">Token</th>
+                    <th className="text-left py-6 px-6 text-gray-300 font-bold uppercase tracking-wider">User</th>
+                    <th className="text-left py-6 px-6 text-gray-300 font-bold uppercase tracking-wider">Pool ID</th>
+                    <th className="text-left py-6 px-6 text-gray-300 font-bold uppercase tracking-wider">Amount</th>
+                    <th className="text-left py-6 px-6 text-gray-300 font-bold uppercase tracking-wider">Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -63,74 +84,76 @@ const Notification = ({ poolDetails, page }) => {
                     .map((notify, index) => (
                       <tr 
                         key={index} 
-                        className="hover:bg-glass transition-colors"
+                        className="hover:bg-gray-800/30 transition-colors border-b border-gray-700/30"
                       >
-                        {/* Transaction Type */}
-                        <td>
-                          <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getTransactionTypeColor(notify?.typeOf)}`}>
-                            {notify?.typeOf}
+                        {/* Enhanced Transaction Type */}
+                        <td className="py-6 px-6">
+                          <div className={`inline-flex items-center space-x-3 px-4 py-2 rounded-full text-sm font-bold border ${getTransactionTypeColor(notify?.typeOf)}`}>
+                            <span className="text-lg">{getTransactionIcon(notify?.typeOf)}</span>
+                            <span>{notify?.typeOf}</span>
                           </div>
                         </td>
 
-                        {/* Token Info */}
-                        <td>
-                          <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-secondary-600 rounded-full flex items-center justify-center">
-                              <span className="text-white text-xs font-bold">
+                        {/* Enhanced Token Info */}
+                        <td className="py-6 px-6">
+                          <div className="flex items-center space-x-4">
+                            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                              <span className="text-white text-sm font-bold">
                                 {poolDetails?.rewardToken.symbol?.charAt(0)}
                               </span>
                             </div>
                             <div>
-                              <div className="text-primary font-medium">
+                              <div className="text-white font-bold text-lg">
                                 {poolDetails?.rewardToken.symbol}
                               </div>
-                              <div className="text-secondary text-sm">
+                              <div className="text-gray-400 text-sm">
                                 {poolDetails?.rewardToken.name}
                               </div>
                             </div>
                             <button
                               onClick={() => copyAddress(poolDetails?.rewardToken.address)}
-                              className="text-secondary hover:text-primary transition-colors"
+                              className="text-gray-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-gray-700/50"
                             >
                               <FaRegCopy className="w-4 h-4" />
                             </button>
                           </div>
                         </td>
 
-                        {/* User Address */}
-                        <td>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-primary font-mono text-sm">
+                        {/* Enhanced User Address */}
+                        <td className="py-6 px-6">
+                          <div className="flex items-center space-x-3">
+                            <span className="text-white font-mono text-sm bg-gray-700/50 px-3 py-2 rounded-lg">
                               {SHORTEN_ADDRESS(notify?.user)}
                             </span>
                             <button
                               onClick={() => copyAddress(notify?.user)}
-                              className="text-secondary hover:text-primary transition-colors"
+                              className="text-gray-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-gray-700/50"
                             >
                               <FaRegCopy className="w-3 h-3" />
                             </button>
                           </div>
                         </td>
 
-                        {/* Pool ID */}
-                        <td>
-                          <div className="inline-flex items-center px-2 py-1 bg-tertiary rounded-lg">
-                            <span className="text-primary text-sm font-medium font-mono">
+                        {/* Enhanced Pool ID */}
+                        <td className="py-6 px-6">
+                          <div className="inline-flex items-center px-3 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-lg">
+                            <span className="text-purple-300 text-sm font-bold font-mono">
                               #{String(notify?.poolID).padStart(2, '0')}
                             </span>
                           </div>
                         </td>
 
-                        {/* Amount */}
-                        <td>
-                          <div className="text-primary font-semibold font-mono">
-                            {parseFloat(notify?.amount).toLocaleString()} {poolDetails?.rewardToken.symbol}
+                        {/* Enhanced Amount */}
+                        <td className="py-6 px-6">
+                          <div className="text-white font-bold font-mono text-lg">
+                            {parseFloat(notify?.amount).toLocaleString()} 
+                            <span className="text-gray-400 text-sm ml-1">{poolDetails?.rewardToken.symbol}</span>
                           </div>
                         </td>
 
-                        {/* Date */}
-                        <td>
-                          <div className="text-secondary text-sm">
+                        {/* Enhanced Date */}
+                        <td className="py-6 px-6">
+                          <div className="text-gray-300 text-sm font-medium">
                             {notify?.timestamp}
                           </div>
                         </td>
@@ -142,26 +165,26 @@ const Notification = ({ poolDetails, page }) => {
           </div>
         </div>
 
-        {/* View All Button */}
+        {/* Enhanced View All Button */}
         {page !== "activity" && (
-          <div className="text-center mt-12 animate-fade-in-up">
+          <div className="text-center mt-16 animate-fade-in-up">
             <a
               href="/activities"
-              className="btn btn-primary btn-lg group"
+              className="btn btn-primary btn-xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 shadow-2xl hover:shadow-blue-500/25 group"
             >
               <span>View All Activities</span>
-              <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
           </div>
         )}
 
-        {/* Additional Info */}
-        <div className="mt-12 text-center animate-fade-in-up">
-          <div className="inline-flex items-center space-x-4 px-6 py-3 glass rounded-xl">
-            <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-            <span className="text-secondary">All transactions are verified on the blockchain</span>
+        {/* Enhanced Additional Info */}
+        <div className="mt-16 text-center animate-fade-in-up">
+          <div className="inline-flex items-center space-x-4 px-8 py-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-2xl backdrop-blur-sm">
+            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="text-green-300 font-medium">All transactions are verified on the blockchain</span>
           </div>
         </div>
       </div>
