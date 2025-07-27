@@ -1,3 +1,4 @@
+import React from "react";
 import "../styles/globals.css";
 import toast, { Toaster } from "react-hot-toast";
 import merge from "lodash/merge";
