@@ -38,7 +38,12 @@ export default function App({ Component, pageProps }) {
       jsonRpcProvider({
         rpc: (chain) => {
           if (chain.id === polygon.id) {
-            return { http: Polygon_RPC_URL };
+            return { 
+              http: Polygon_RPC_URL,
+              timeout: 10000,
+              retryCount: 3,
+              retryDelay: 1000
+            };
           }
           return null;
         },
